@@ -7,6 +7,6 @@ import reactor.core.publisher.Mono
 
 interface MessageRepository: ReactiveMongoRepository<Message,String> {
 
-    override fun findAll(): Flux<Message>
+    fun findAllByReceiverId(receiverId: String): Flux<Message>
     override fun findById(id: String): Mono<Message>
 }
