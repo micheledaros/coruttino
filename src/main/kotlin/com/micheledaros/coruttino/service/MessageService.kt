@@ -25,14 +25,14 @@ class MessageService(
 
     suspend fun sendMessage(text: String, receiverId: String): Message =
         Message(
-            id = UUID.randomUUID().toString(),
-            senderId = userIdProvider.get(),
-            receiverId = receiverId,
-            text = text,
-            createdAt = timeProvider.get()
-        )
-            .let { repository.save(it) }
-            .let { it.awaitSingle() }
+        id = UUID.randomUUID().toString(),
+        senderId = userIdProvider.get(),
+        receiverId = receiverId,
+        text = text,
+        createdAt = timeProvider.get()
+    )
+        .let { repository.save(it) }
+            .awaitSingle()
 
 
     suspend fun markAsRead(id: String): Message =
@@ -41,7 +41,7 @@ class MessageService(
             .let {  message -> repository.save(message)}
             .let { mono -> mono.awaitSingle() }
 
-    public suspend fun findOne(id: String): Message {
+    suspend fun findOne(id: String): Message {
         return userIdProvider.get().let { receiverId ->
             repository.findFirstByIdAndReceiverId(id = id, receiverId = receiverId)
                 .awaitSingleOrNull()
