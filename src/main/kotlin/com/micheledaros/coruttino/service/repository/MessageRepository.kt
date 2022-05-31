@@ -8,6 +8,9 @@ import reactor.core.publisher.Mono
 
 interface MessageRepository: ReactiveMongoRepository<Message,String> {
 
-    fun findAllByReceiverId(receiverId: String, pageable: Pageable): Flux<Message>
+    fun findAllByReceiverIdOrderByCreatedAtDesc(receiverId: String, pageable: Pageable): Flux<Message>
     override fun findById(id: String): Mono<Message>
+
+    fun findFirstByIdAndReceiverId(id: String, receiverId: String): Mono<Message>
+
 }

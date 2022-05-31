@@ -1,4 +1,4 @@
-package com.micheledaros.coruttino.controller.configuration
+package com.micheledaros.coruttino.configuration
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.web.ReactivePageableHandlerMethodArgumentResolver
