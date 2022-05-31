@@ -5,8 +5,8 @@ import com.micheledaros.coruttino.controller.dto.MessageDto
 import com.micheledaros.coruttino.controller.dto.SendMessageRequestDto
 import com.micheledaros.coruttino.service.MessageService
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.reactor.ReactorContext
 import kotlinx.coroutines.withContext
+import org.springframework.data.domain.Pageable
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ServerWebExchange
 
@@ -26,12 +26,9 @@ class MessageHandler(
     }
 
     @GetMapping("message")
-    suspend fun getAll(): List<MessageDto> {
-
-          return messageService.findAll().map { messageMapper.toDto(it) }
+    suspend fun getAll(pageable: Pageable): List<MessageDto> {
+          return messageService.findAll(pageable).map { messageMapper.toDto(it) }
     }
-
-
 
     @PostMapping("/message/{receiver-id}")
     suspend fun writeMessage(
@@ -44,5 +41,4 @@ class MessageHandler(
             receiverId = receiverId,
         )
     }
-
 }

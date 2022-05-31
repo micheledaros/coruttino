@@ -6,6 +6,7 @@ import com.micheledaros.coruttino.service.repository.MessageRepository
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactor.awaitSingle
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -15,12 +16,11 @@ class MessageService(
     val userIdProvider: UserIdProvider
 ) {
 
-    suspend fun findAll(): List<Message> {
+    suspend fun findAll(pageable: Pageable): List<Message> {
         val receiverId = userIdProvider.get()
         println(receiverId)
-        return repository.findAllByReceiverId(receiverId).asFlow().toList()
+        return repository.findAllByReceiverId(receiverId, pageable).asFlow().toList()
     }
-
 
     suspend fun sendMessage(text: String, receiverId: String) =
         userIdProvider.get().also { senderId ->

@@ -9,5 +9,10 @@ class Message(
     val id: String,
     val senderId: String,
     val receiverId: String,
-    val text: String
-)
+    val text: String,
+    var read: Boolean = false
+) {
+    fun notifyRead () {
+        read = true
+    }
+}

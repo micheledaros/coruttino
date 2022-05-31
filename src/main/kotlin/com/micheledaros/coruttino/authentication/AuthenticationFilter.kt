@@ -11,7 +11,6 @@ private const val headerKey = "user-id"
 @Component
 class AuthenticationFilter : WebFilter {
 
-
     override fun filter(exchange: ServerWebExchange, chain: WebFilterChain): Mono<Void> {
         val userId = exchange.request.headers[headerKey]?.firstOrNull()
 
@@ -24,6 +23,4 @@ class AuthenticationFilter : WebFilter {
             chain.filter(exchange)
         }
     }
-
-
 }
